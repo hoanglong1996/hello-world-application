@@ -58,7 +58,7 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
       - name: Copy deployment.yaml to EC2
         run: |
-          sed -i 's/CHANGE_EC2_DNS/{{ secrets.EC2_DNS }}/g' deployment.yaml
+          sed -i 's/CHANGE_EC2_DNS/${{ secrets.EC2_DNS }}/g' deployment.yaml
           scp -o StrictHostKeyChecking=no deployment.yaml ubuntu@${{ secrets.EC2_HOST }}:~/
       - name: Deploy application on K3s
         run: |
