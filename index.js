@@ -14,7 +14,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 // Define a route to serve the main HTML page
 app.get('/', (req, res) => {
-    let content = req.query.content || 'Hello World!'
+    let content = req.query.content || 'Hello World!!!'
 
     let contentHtml = generateHTML(content)
     res.send(contentHtml)
