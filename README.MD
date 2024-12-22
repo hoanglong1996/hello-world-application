@@ -11,7 +11,7 @@ Follow these steps to get the application up and running locally:
 2. **Run the Docker Container**
 
     ```bash
-    docker run -d --name hello-my-world -p 80:80 hello-world-application
+    docker run -d --name hello-my-world -p 3000:3000 hello-world-application
     ```
 
 > **Note:** Access the application via [http://localhost](http://localhost)

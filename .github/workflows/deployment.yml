@@ -8,7 +8,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build-test:
+  test:
     name: Build and Test
     runs-on: ubuntu-latest
 
@@ -26,9 +26,9 @@ jobs:
         cache: 'npm'
     - run: npm ci
     - run: npm test
-  build-and-deploy:
+  build:
     name: Build Docker Image and Deploy to Docker Hub Registry
-    needs: build-test
+    needs: test
     runs-on: ubuntu-latest
 
     steps:
@@ -44,3 +44,25 @@ jobs:
       - name: Push Docker Image
         run: |
           docker push ${{ secrets.DOCKER_USERNAME }}/hello-world:latest
+  deploy:
+    runs-on: ubuntu-latest
+    name: Roll out the deployment
+    needs: build
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+      - name: Copy deployment.yaml to EC2
+        run: |
+          sed -i 's/CHANGE_EC2_DNS/{{ secrets.EC2_DNS }}/g' deployment.yaml
+          scp -o StrictHostKeyChecking=no deployment.yaml ubuntu@${{ secrets.EC2_HOST }}:~/
+      - name: Deploy application on K3s
+        run: |
+          ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.EC2_HOST }} << 'EOF'
+          sudo kubectl apply -f deployment.yaml
+          sudo kubectl rollout status deployment my-app
+          EOF
