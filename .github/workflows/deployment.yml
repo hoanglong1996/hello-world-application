@@ -64,5 +64,5 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.EC2_HOST }} << 'EOF'
           sudo kubectl apply -f deployment.yaml
-          sudo kubectl rollout status deployment my-app
+          sudo kubectl rollout status deployment hello-world-deployment
           EOF
