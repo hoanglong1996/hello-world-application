@@ -6,7 +6,7 @@ const path = require('path')
 const app = express()
 
 // Define a port
-const PORT = 80
+const PORT = 3000
 
 // Serve static files (e.g., CSS, JS) from the 'public' directory
 // eslint-disable-next-line no-undef
@@ -14,7 +14,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 // Define a route to serve the main HTML page
 app.get('/', (req, res) => {
-    let content = req.query.content || 'Hello World!'
+    let content = req.query.content || 'Hello World!!!'
 
     let contentHtml = generateHTML(content)
     res.send(contentHtml)
