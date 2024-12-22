@@ -6,7 +6,7 @@ const path = require('path')
 const app = express()
 
 // Define a port
-const PORT = 80
+const PORT = 3000
 
 // Serve static files (e.g., CSS, JS) from the 'public' directory
 // eslint-disable-next-line no-undef
