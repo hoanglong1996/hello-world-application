@@ -14,6 +14,6 @@ Follow these steps to get the application up and running locally:
     docker run -d --name hello-my-world -p 3000:3000 hello-world-application
     ```
 
-> **Note:** Access the application via [http://localhost](http://localhost)
+> **Note:** Access the application via [http://localhost:3000](http://localhost:3000)
 
 Happy coding! 🎉
